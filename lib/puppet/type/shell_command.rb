@@ -41,9 +41,9 @@ Puppet::Type.newtype(:shell_command) do
     undesired to actually execute test commands (`unless` and `onlyif`). This
     parameter controls how noop runs will react to the system. Valid values:
       `test`: `unless` and `onlyif` commands will be executed in noop runs
-      `run`: `unless` commands are assumed to have failed and `onlyif`
+      `will_run`: `unless` commands are assumed to have failed and `onlyif`
         commands are assumed to have succeeded.
-      `dontrun`: `unless` commands are assumed to have succeeded, and `onlyif`
+      `wont_run`: `unless` commands are assumed to have succeeded, and `onlyif`
         commands are assumed to have failed.
     Note that the setting of this parameter does not cause the `command` to
     actually run in noop mode - only to determine whether or not it would in

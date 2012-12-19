@@ -8,8 +8,12 @@ Puppet::Type.type(:shell_command).provide(:sh, :parent => Puppet::Provider::Shel
 
   commands :sh => '/bin/sh -c'
 
+  # how do I get the return code?
   def execute(command)
-    sh(command)
+    begin
+      sh(command)
+    rescue Puppet::ExecutionFailure => e
+
   end
 end
 
