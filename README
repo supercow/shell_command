@@ -1,0 +1,7 @@
+Goals:
+
+Replace all functionality of the Exec type
+Should always work as expected within Puppet's dependency framework
+  - Dependant resources should ALWAYS be unmanaged when the command fails
+Adding providers for different shells should be trivial
+Noop should allow for optionally skipping test commands
