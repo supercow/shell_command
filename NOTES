@@ -1,7 +1,16 @@
-Goals:
+Requirements:
+
 Replace all functionality of the Exec type
 Should always work as expected within Puppet's dependency framework
   - Dependant resources should ALWAYS be unmanaged when the command fails
 Adding providers for different shells should be trivial
 Noop should allow for optionally skipping test commands
 Should not cause problems with enumeration
+  omitting the instances method should make this work
+The type should not directly call any commands - only the provider
+  Exec providers' run() is considered a violation of this
+
+Problems:
+
+How do you know if we're being refreshed or running normally?
+  I might need a better understanding of the dependency tree
