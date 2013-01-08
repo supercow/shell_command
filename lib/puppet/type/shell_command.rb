@@ -16,6 +16,7 @@ Puppet::Type.newtype(:shell_command) do
     validate do |cmd|
       #if not qualified and path not specified, fail
       #if the path is not valid for the OS, fail
+      true
     end
   end
 
