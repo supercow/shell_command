@@ -22,8 +22,11 @@ Puppet::Type.type(:shell_command).provide(:shell_command) do
     creates_allow = true
 
     # test creates
+    creates_allow = ! FileTest.exists(resource[:creates]) if resource[:creates] != nil
 
     # test refreshonly (oh boy...)
+    # Do some kinda funky shit ready the catalog maybe?
+    # call it true for now as a placeholder
 
     # test unless
     if !resource[:unless].nil? # pass if unset
@@ -43,12 +46,31 @@ Puppet::Type.type(:shell_command).provide(:shell_command) do
     end
 
     # test onlyif
+    if !resource[:onlyif].nil? # pass if unset
+      case resource[:noop_test] #and is_noop_mode TODO
+      when :will_run
+        onlyif_allow = true
+      when :wont_run
+        onlyif_allow = false
+      when :test
+        retval = execute resource[:onlyif]
+        if retval == 0 #TODO get a way to test for more than just 0
+          onlyif_allow = true
+        else
+          onlyif_allow = false
+        end
+      end
+    end
 
-    # the system is in a state requiring the commands execution if all of
-    # these checks pass, if one fails, the effects of the command already
+    # the system is in a state requiring the command's execution if all of
+    # these checks pass. if one fails, the effects of the command already
     # exist on the system
     !(unless_allow and onlyif_allow and refreshonly_allow and creates_allow)
 
+  end
+
+  def create
+    execute resource[:name]
   end
 
 end
