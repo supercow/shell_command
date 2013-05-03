@@ -1,6 +1,6 @@
 require 'puppet/provider/shell_command'
 
-Puppet::Type.type(:shell_command).provide(:sh, :parent => Puppet::Provider::Shell_command do
+Puppet::Type.type(:shell_command).provide(:sh, :parent => Puppet::Provider::Shell_command) do
   confine :feature => :posix
   confine :true    => File.exists?('/bin/sh')
 
@@ -13,6 +13,8 @@ Puppet::Type.type(:shell_command).provide(:sh, :parent => Puppet::Provider::Shel
     begin
       sh(command)
     rescue Puppet::ExecutionFailure => e
+	    raise e
+    end
 
   end
 end
