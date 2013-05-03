@@ -13,7 +13,7 @@ Puppet::Type.type(:shell_command).provide(:sh, :parent => Puppet::Provider::Shel
     begin
       sh(command)
     rescue Puppet::ExecutionFailure => e
-	    raise e
+      raise e
     end
 
   end
