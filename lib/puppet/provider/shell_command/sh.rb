@@ -6,16 +6,21 @@ Puppet::Type.type(:shell_command).provide(:sh, :parent => Puppet::Provider::Shel
 
   defaultfor :feature => :posix
 
-  commands :sh => '/bin/sh -c'
+  commands :sh => '/bin/sh'
 
   # how do I get the return code?
   def execute(command)
     begin
-      sh(command)
+      sh_c(command)
     rescue Puppet::ExecutionFailure => e
       raise e
     end
 
+  end
+
+  private
+  def sh_c(args*)
+    sh('-c',args*)
   end
 end
 
