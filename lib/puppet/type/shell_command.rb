@@ -5,7 +5,8 @@ Puppet::Type.newtype(:shell_command) do
         user is asserting that the command must be run repeatedly forever, and
         every invocation is necessarily a state change.
   "
-  newproperty(:command, :namevar => true) do
+  
+  newparam(:command, :namevar => true) do
    desc "The actual command to execute.  Must either be fully qualified
         or a search path for the command must be provided.  If the command
         succeeds, any output produced will be logged at the instance's
@@ -20,12 +21,24 @@ Puppet::Type.newtype(:shell_command) do
     end
   end
 
-  newparam(:unless) do
-    desc 'Test: The successful execution of this command (return code
-    0) indicates that the system state is non-compliant and must be corrected
-    by executing the `command`.'
+  newproperty(:execution) do
+    defaultto :executed
+    newvalues(:executed,:not_executed)
+  end
 
-    defaultto nil
+  newparam(:creates) do
+    desc ''
+    defaultto :undef
+  end
+
+  newparam(:onlyif) do
+    desc ''
+    defaultto :undef
+  end
+
+  newparam(:unless) do
+    desc ''
+    defaultto :undef
   end
 
   newparam(:refreshonly) do
@@ -33,7 +46,7 @@ Puppet::Type.newtype(:shell_command) do
     state if this `shell_command` resource subscribes to or is notified by
     another resource which has been changed in the current puppet run.'
 
-    defaultto :no
+    defaultto :false
     newvalues(:true, :false)
   end
 
